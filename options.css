@@ -1,0 +1,155 @@
+/* Container styling with Windows 11-inspired layout */
+.container {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  background: #f0f0f0;
+  color: #000000;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  font-family: "Segoe UI", sans-serif;
+}
+
+/* Header styling with centered title */
+header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 24px;
+  color: #333333;
+}
+
+/* Settings section styling */
+.settings-section {
+  margin-bottom: 20px;
+}
+
+.settings-section h2 {
+  font-size: 18px;
+  color: #333333;
+  margin-bottom: 10px;
+}
+
+.settings-section p {
+  font-size: 14px;
+  margin-bottom: 15px;
+  color: #000000;
+}
+
+/* Input group styling */
+.input-group {
+  margin-bottom: 15px;
+}
+
+.input-group label {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 5px;
+  color: #000000;
+}
+
+.input-group input,
+.input-group select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #cccccc;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #000000;
+  box-sizing: border-box;
+}
+
+/* Channel list styling */
+#channels {
+  margin-bottom: 15px;
+}
+
+.channel-input {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  margin-bottom: 10px;
+  background: #ffffff;
+  border-radius: 8px;
+  border: 1px solid #cccccc;
+}
+
+.channel-input.dragging {
+  opacity: 0.5;
+}
+
+.drag-handle {
+  cursor: move;
+  font-size: 16px;
+  color: #000000;
+}
+
+.channel-input input,
+.channel-input select,
+.channel-input button {
+  flex: 1;
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid #cccccc;
+  background: #ffffff;
+  color: #000000;
+}
+
+.channel-input button {
+  flex: 0 0 auto;
+  background: #0078d4;
+  border: none;
+  cursor: pointer;
+}
+
+/* Save button styling */
+#save {
+  width: 100%;
+  padding: 10px;
+  background: #0078d4;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+#save:hover {
+  background: #005bb5;
+}
+
+/* Live channels styling */
+#live-channels {
+  margin-top: 10px;
+  padding: 10px;
+  background: #ffffff;
+  border-radius: 8px;
+  border: 1px solid #cccccc;
+}
+
+#live-channels button {
+  display: block;
+  width: 100%;
+  margin-bottom: 5px;
+  padding: 8px;
+  background: #0078d4;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+}
+
+#live-channels button:hover {
+  background: #005bb5;
+}
+
+/* Specific styling for verbose logging checkbox */
+.input-group[style*="verbose-logging"] {
+  display: flex;
+  align-items: left;
+  justify-content: flex-start;
+}

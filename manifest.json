@@ -1,0 +1,32 @@
+{
+  "manifest_version": 3,
+  "name": "YouTube Live Monitor",
+  "version": "1.0",
+  "description": "Monitors YouTube channels for live streams, switches to the stream, makes it full screen, and starts streaming via OBS.",
+  "permissions": [
+    "alarms",
+    "tabs",
+    "storage",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://www.youtube.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+  "action": {
+    "default_title": "Open YouTube Live Monitor Settings",
+    "default_icon": {
+      "48": "icon48.png"
+    }
+  },
+  "icons": {
+    "48": "icon48.png",
+    "128": "icon128.png"
+  }
+}

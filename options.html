@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YouTube Live Monitor</title>
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>YouTube Live Monitor</h1>
+    </header>
+
+    <div class="settings-section">
+      <h2>Channels to Monitor</h2>
+      <p><strong>Note:</strong> This is a priority list where the order of channels determines precedence—the topmost channel has the highest priority. You can move channels around using drag-and-drop to adjust their order.</p>
+      <div id="channels"></div>
+      <button id="add-channel" class="win11-button primary">Add Channel</button>
+    </div>
+
+    <div class="settings-section">
+      <h2>OBS Settings</h2>
+      <div class="input-group">
+        <label for="obs-host">OBS Host</label>
+        <input type="text" id="obs-host" placeholder="localhost">
+      </div>
+      <div class="input-group">
+        <label for="obs-port">OBS Port</label>
+        <input type="text" id="obs-port" placeholder="4455">
+      </div>
+      <div class="input-group">
+        <label for="obs-password">OBS Password</label>
+        <input type="password" id="obs-password">
+      </div>
+    </div>
+
+    <div class="settings-section">
+      <h2>General Settings</h2>
+      <div class="input-group" style="display: flex; align-items: center;">
+        <input type="checkbox" id="verbose-logging" style="margin-right: 10px;">
+        <label>Verbose Logging</label>
+      </div>
+    </div>
+
+    <div class="settings-section">
+      <h2>Live Channels</h2>
+      <div id="live-channels">No channels are live.</div>
+    </div>
+
+    <button id="save" class="win11-button primary">Save Settings</button>
+  </div>
+
+  <script src="options.js"></script>
+</body>
+</html>
