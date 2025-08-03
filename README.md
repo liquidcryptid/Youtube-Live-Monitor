@@ -22,6 +22,6 @@ The channel list prioritizes the channels from the top down. This means that a c
 You can use the handles on the left of the channel names to reprioritize the channels at any time (DOn't forget to press save after any changes
 
 NOTES:
-Due to Chrome securioty features the extension is not allowed to full screen the video
+Due to Chrome security features the extension is not allowed to full screen the video
 You will need to configure OBS for streaming or recording
 THis extention does not launch OBS, OBS needs to running using the scene you want to record/stream with
