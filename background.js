@@ -53,7 +53,7 @@
     return btoa(binary);
   }
 
-  // Function to check if a channel is live
+  // Function to check if a channel is live, filtering out waiting lobbies
   async function isChannelLive(channelId, verboseLogging) {
     const liveUrl = `https://www.youtube.com/channel/${channelId}/live`;
     log(verboseLogging, `Fetching live status for channel ${channelId}: ${liveUrl}`);
@@ -70,11 +70,20 @@
         const canonicalMatch = html.match(/<link rel="canonical" href="https:\/\/www\.youtube\.com\/watch\?v=([^"]+)">/);
         if (canonicalMatch) {
           const videoId = canonicalMatch[1];
-          log(verboseLogging, `Found live video ID: ${videoId} for channel ${channelId}`);
+          log(verboseLogging, `Found video ID: ${videoId} for channel ${channelId}`);
+
+          // Check for waiting lobby indicators (e.g., "Upcoming" or lack of live stream start)
+          const isWaitingLobby = html.includes('ytp-upnext') || !html.includes('"isLiveDvrEnabled":true');
+          if (isWaitingLobby) {
+            log(verboseLogging, `Waiting lobby detected for channel ${channelId}`);
+            return { isLive: false }; // Ignore waiting lobby
+          }
+
+          log(verboseLogging, `Live stream detected for channel ${channelId} with video ID ${videoId}`);
           return { isLive: true, videoId };
         } else {
           log(verboseLogging, `Live stream detected but no video ID found for channel ${channelId}`);
-          return { isLive: true, videoId: null };
+          return { isLive: false }; // No video ID, likely still in setup
         }
       }
       log(verboseLogging, `No live stream detected for channel ${channelId}`);
