@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "YouTube Live Monitor",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Monitors YouTube channels for live streams, switches to the stream, makes it full screen, and starts streaming via OBS.",
   "permissions": [
     "alarms",

@@ -53,7 +53,7 @@
     return btoa(binary);
   }
 
-  // Function to check if a channel is live, with refined waiting lobby filtering
+  // Function to check if a channel is live, with enhanced waiting lobby filtering
   async function isChannelLive(channelId, verboseLogging) {
     const liveUrl = `https://www.youtube.com/channel/${channelId}/live`;
     log(verboseLogging, `Fetching live status for channel ${channelId}: ${liveUrl}`);
@@ -72,33 +72,35 @@
           const videoId = canonicalMatch[1];
           log(verboseLogging, `Found video ID: ${videoId} for channel ${channelId}`);
 
-          // Refined waiting lobby detection
+          // Enhanced waiting lobby detection
           const hasUpcoming = html.includes('ytp-upnext');
           const hasDvr = html.includes('"isLiveDvrEnabled":true');
-          const isWaitingLobby = hasUpcoming && !hasDvr; // Require both conditions for lobby
+          const hasScheduled = html.includes('"scheduledStartTime"') || html.includes('"upcomingEventData"');
+          const isWaitingLobby = (hasUpcoming || hasScheduled) && !hasDvr; // Multiple lobby indicators
           if (isWaitingLobby) {
-            log(verboseLogging, `Waiting lobby detected for channel ${channelId}`);
+            log(verboseLogging, `Waiting lobby detected for channel ${channelId} with indicators: ytp-upnext=${hasUpcoming}, scheduled=${hasScheduled}, dvr=${hasDvr}`);
             // Recheck after a short delay
-            await new Promise(resolve => setTimeout(resolve, 10000)); // 10-second delay
+            await new Promise(resolve => setTimeout(resolve, 15000)); // 15-second delay
             const recheckResponse = await fetch(liveUrl, { method: 'GET', mode: 'no-cors' });
             const recheckHtml = await recheckResponse.text();
             const recheckHasUpcoming = recheckHtml.includes('ytp-upnext');
+            const recheckHasScheduled = recheckHtml.includes('"scheduledStartTime"') || recheckHtml.includes('"upcomingEventData"');
             const recheckHasDvr = recheckHtml.includes('"isLiveDvrEnabled":true');
-            if (recheckHasUpcoming && !recheckHasDvr) {
+            if ((recheckHasUpcoming || recheckHasScheduled) && !recheckHasDvr) {
               log(verboseLogging, `Recheck confirmed waiting lobby for channel ${channelId}`);
               return { isLive: false };
             }
-            log(verboseLogging, `Recheck detected live stream or lobby overridden for channel ${channelId} with video ID ${videoId}`);
+            log(verboseLogging, `Recheck detected live stream for channel ${channelId} with video ID ${videoId}`);
             return { isLive: true, videoId };
           }
 
-          // Override lobby if live broadcast details are present
-          if (html.includes('"liveBroadcastDetails"')) {
-            log(verboseLogging, `Live broadcast details detected, overriding lobby for channel ${channelId} with video ID ${videoId}`);
+          // Confirm live stream
+          if (!hasUpcoming && !hasScheduled && (hasDvr || !html.includes('"upcomingEventData"'))) {
+            log(verboseLogging, `Live stream confirmed for channel ${channelId} with video ID ${videoId}`);
             return { isLive: true, videoId };
           }
 
-          log(verboseLogging, `Live stream detected for channel ${channelId} with video ID ${videoId}`);
+          log(verboseLogging, `Live stream detected for channel ${channelId} with video ID ${videoId} (pending recheck if needed)`);
           return { isLive: true, videoId };
         } else {
           log(verboseLogging, `Live stream detected but no video ID found for channel ${channelId}`);
